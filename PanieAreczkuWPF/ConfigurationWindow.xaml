@@ -44,7 +44,7 @@
             </Button.Effect>
         </Button>
 
-        <Image HorizontalAlignment="Left"  Name="MyImg"  Height="76" Margin="128,42,0,0"  VerticalAlignment="Top" Width="141" Source="eyes.PNG"/>
+        <Image HorizontalAlignment="Left"  Name="MyImg"  Height="76" Margin="128,42,0,0"  VerticalAlignment="Top" Width="141" Source="./img/eyes.PNG"/>
 
 
     </Grid>
