@@ -82,7 +82,6 @@ namespace PanieAreczkuWPF
                     //stream1.Write(file, 0, file.Length);
                     //stream1.Position = 0;
                     mailMessage.Attachments.Add(new Attachment(stream1, $"{fileName}.jpg"));
-                    File.Delete(fileName);
                 }
 
 
@@ -116,7 +115,14 @@ namespace PanieAreczkuWPF
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;
                 smtp.Send(mailMessage); //sending Email  
-    
+
+                foreach (var fileName in fileNames)
+                {
+                    File.Delete(fileName);
+                }
+
+
+
             }
             catch (Exception ex)
             {
