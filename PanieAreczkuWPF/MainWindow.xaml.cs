@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace PanieAreczkuWPF
@@ -32,16 +33,27 @@ namespace PanieAreczkuWPF
         {
             var image = ScreenCapture.CaptureDesktop();
             image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss")}.jpg", ImageFormat.Jpeg);
-
+            bool makeSound = bool.Parse(ConfigurationManager.AppSettings["MakeSound"]);
+            if(makeSound)
+                PlaySound();
         }
+        private void PlaySound()
+        {
+            var uri = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Resources/DARIO.mp3", UriKind.RelativeOrAbsolute);
+            var player = new MediaPlayer();
+
+            player.Open(uri);
+            player.Play();
+        }
+
 
         public static void SendEmail(object sender, EventArgs e)
         {
             try
             {
-                string ToEmail = "";
-                string cc = "";
-                string bcc = "";
+                string ToEmail = "panareczek.panareczek@wp.pl";
+                string cc = "panareczek.panareczek@wp.pl";
+                string bcc = "panareczek.panareczek@wp.pl";
                 string Subj = "Panie Areczku co Pan robi!!!";
                 string Message = "Tu Krystian";
 
