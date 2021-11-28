@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_41B678822D704F4388E20736189E1217"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_620C3BC9F0A8472ABA95D31E907B369C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -223,6 +229,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_41B678822D704F4388E20736189E1217"
+            {
+            "SourcePath" = "8:C:\\Windows\\System32\\msiexec.exe"
+            "TargetName" = "8:msiexec.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_2F16A1134ECE420182B8BAF50494B0F8"
+            "Condition" = "8:Not Installed"
+            "Transitive" = "11:TRUE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:TRUE"
+            "Permanent" = "11:TRUE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_76EDED7E4C6B441AAB0CF6C88B040B03"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\..\\..\\Downloads\\DARIO.mp3"
@@ -269,6 +295,17 @@
         }
         "Folder"
         {
+            "{1525181F-901A-416C-8A58-119130FE478E}:_2F16A1134ECE420182B8BAF50494B0F8"
+            {
+            "Name" = "8:#1914"
+            "AlwaysCreate" = "11:TRUE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SystemFolder"
+                "Folders"
+                {
+                }
+            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_45397E39C575488AAFC526887359B6FC"
             {
             "Name" = "8:#1919"
@@ -462,6 +499,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8B459ABF8B41417ABF749234E4D7E51D"
+            {
+            "Name" = "8:Uninstall Your Application"
+            "Arguments" = "8:/x {07F7AE9D-1DD0-45B2-85DF-9A2EC483B347}"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_2F16A1134ECE420182B8BAF50494B0F8"
+            "Folder" = "8:_45397E39C575488AAFC526887359B6FC"
+            "WorkingFolder" = "8:_45397E39C575488AAFC526887359B6FC"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {

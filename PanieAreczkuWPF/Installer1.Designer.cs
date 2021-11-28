@@ -34,6 +34,20 @@ namespace PanieAreczkuWPF
             Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\PanieAreczkuWPF.exe");
         }
 
+        public override void Uninstall(IDictionary savedState)
+        {
+            base.Uninstall(savedState);
+            Process[] workers = Process.GetProcessesByName("PanieAreczkuWPF");
+            foreach (Process worker in workers)
+            {
+                worker.Kill();
+               
+                worker.WaitForExit();
+                worker.Dispose();
+            }
+
+        }
+
         #region Component Designer generated code
 
         /// <summary>
