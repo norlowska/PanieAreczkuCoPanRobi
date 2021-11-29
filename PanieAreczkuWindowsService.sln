@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanieAreczkuWPF", "PanieAre
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PanieAreczkuWPFInstaller", "PanieAreczkuWPFInstaller\PanieAreczkuWPFInstaller.vdproj", "{919AD6F3-DC08-4054-B22F-B1A0F30620E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PanieAreczkuWPFKonfguracjaAppConfig", "PanieAreczkuWPFKonfguracjaAppConfig\PanieAreczkuWPFKonfguracjaAppConfig.csproj", "{2C9612AD-0823-4E5F-A035-C5553EAE8097}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{00509DEE-C0AF-4D22-A51B-662400E1B48A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{919AD6F3-DC08-4054-B22F-B1A0F30620E0}.Debug|Any CPU.ActiveCfg = Debug
 		{919AD6F3-DC08-4054-B22F-B1A0F30620E0}.Release|Any CPU.ActiveCfg = Release
+		{2C9612AD-0823-4E5F-A035-C5553EAE8097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C9612AD-0823-4E5F-A035-C5553EAE8097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C9612AD-0823-4E5F-A035-C5553EAE8097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C9612AD-0823-4E5F-A035-C5553EAE8097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

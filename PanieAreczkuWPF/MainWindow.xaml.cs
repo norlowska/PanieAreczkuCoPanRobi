@@ -22,7 +22,7 @@ namespace PanieAreczkuWPF
             Directory.CreateDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/ScreenShoots");
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(MakeScreenShot);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 20);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, int.Parse(ConfigurationManager.AppSettings["ScreenShotInterval"]));
             dispatcherTimer.Start();
 
             dispatcherTimer.Tick += new EventHandler(SendEmail);
