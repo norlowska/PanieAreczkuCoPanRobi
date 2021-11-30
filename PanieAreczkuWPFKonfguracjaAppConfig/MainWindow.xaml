@@ -26,17 +26,17 @@
                 </InlineUIContainer><Run Text=" min "/><InlineUIContainer>
                 <TextBox x:Name="DelaySTextbox" HorizontalAlignment="Left" Height="19" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="25"/>
                 </InlineUIContainer><Run Text=" s"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="105,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" Background="#FFF6F3EC"  Padding="10">
+        <TextBlock HorizontalAlignment="Left" Margin="105,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" Background="#FFF6F3EC"  Padding="10">
             <TextBlock.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </TextBlock.Effect><Run Text="EMAIL:   "/><InlineUIContainer>
                 <TextBox x:Name="EmailTextBox" Height="22" TextWrapping="Wrap" Text="" Width="105" />
             </InlineUIContainer></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="105,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" Background="#FFF6F3EC" Padding="10">
+        <TextBlock HorizontalAlignment="Left" Margin="105,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" Background="#FFF6F3EC" Padding="10">
             <TextBlock.Effect>
                 <DropShadowEffect Opacity="0.5"/>
-            </TextBlock.Effect><Run Text="ID:   "/><InlineUIContainer>
-                <TextBox x:Name="IdTextBox" Height="22" TextWrapping="Wrap" Text="" Width="126"/>
+            </TextBlock.Effect><Run Text="P"/><Run Text="assword:   "/><InlineUIContainer>
+                <PasswordBox x:Name="PasswordTextBox" Height="22" Width="87"  />
             </InlineUIContainer></TextBlock>
         <Button x:Name="SaveBtn" Content="SAVE" HorizontalAlignment="Left" Height="24" Margin="105,350,0,0" VerticalAlignment="Top" Width="182"  Background="#FFBDD8DD" BorderBrush="{x:Null}" Click="SaveBtn_Click">
             <Button.Effect>

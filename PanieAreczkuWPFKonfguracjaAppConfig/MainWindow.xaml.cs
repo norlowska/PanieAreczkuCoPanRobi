@@ -20,9 +20,6 @@ using System.Windows.Shapes;
 
 namespace PanieAreczkuWPFKonfguracjaAppConfig
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -34,7 +31,7 @@ namespace PanieAreczkuWPFKonfguracjaAppConfig
         {
             string fullPath = System.IO.Path.GetDirectoryName(path: Assembly.GetExecutingAssembly().Location);
             List<string> listPath = fullPath.Split(System.IO.Path.DirectorySeparatorChar).ToList<string>();
-            listPath[1]= "\\"+listPath[1];
+            listPath[1] = "\\" + listPath[1];
             string path = System.IO.Path.Combine(listPath.GetRange(0, listPath.Count - 3).ToArray());
 
             path = System.IO.Path.Combine(path, "PanieAreczkuWPF\\App.config");
@@ -44,29 +41,61 @@ namespace PanieAreczkuWPFKonfguracjaAppConfig
 
             Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            string HostAdd = configuration.AppSettings.Settings["Host"].Value;
-          
             string emali = EmailTextBox.Text;
+            string password = PasswordTextBox.Password;
             int min;
             int s;
 
-            if (emali != "")
+
+            if (IsValidEmail(emali) && emali != "")
             {
                 configuration.AppSettings.Settings["FromMail"].Value = emali;
+                EmailTextBox.Background = Brushes.White;
             }
-            
-            bool isNumericMin = int.TryParse(DelayMinTextbox.Text, out min);
-            bool isNumericS = int.TryParse(DelaySTextbox.Text, out s);
-            if (isNumericMin && isNumericS )
-            {   int value = min * 60 + s;
-                if(value > 0)configuration.AppSettings.Settings["ScreenShotInterval"].Value = value.ToString();
-            }
-            else if (isNumericS)
+            else
             {
-                if (s > 0) configuration.AppSettings.Settings["ScreenShotInterval"].Value = s.ToString();
+                EmailTextBox.Background = Brushes.Red;
+                return;
             }
 
-            if ((bool)(SoundCheckBox.IsChecked)) {
+            if (password != "")
+            {
+                configuration.AppSettings.Settings["Password"].Value = password;
+                PasswordTextBox.Background = Brushes.White;
+            }
+            else
+            {
+                PasswordTextBox.Background = Brushes.Red;
+                return;
+            }
+
+            bool isNumericMin = int.TryParse(DelayMinTextbox.Text, out min);
+            bool isNumericS = int.TryParse(DelaySTextbox.Text, out s);
+            if (isNumericMin && isNumericS)
+            {
+                int value = min * 60 + s;
+                if (value > 0)
+                {
+                    configuration.AppSettings.Settings["ScreenShotInterval"].Value = value.ToString();
+                    DelayMinTextbox.Background = Brushes.White;
+                    DelaySTextbox.Background = Brushes.White;
+                }
+                else
+                {
+                    DelayMinTextbox.Background = Brushes.Red;
+                    DelaySTextbox.Background = Brushes.Red;
+                    return;
+                }
+            }
+            else
+            {
+                DelayMinTextbox.Background = Brushes.Red;
+                DelaySTextbox.Background = Brushes.Red;
+                return;
+            }
+
+            if ((bool)(SoundCheckBox.IsChecked))
+            {
                 configuration.AppSettings.Settings["MakeSound"].Value = "true";
             }
             else
@@ -78,5 +107,23 @@ namespace PanieAreczkuWPFKonfguracjaAppConfig
 
             System.Windows.Application.Current.Shutdown();
         }
+
+        bool IsValidEmail(string email)
+        {
+            if (email.Trim().EndsWith("."))
+            {
+                return false;
+            }
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
     }
 }
