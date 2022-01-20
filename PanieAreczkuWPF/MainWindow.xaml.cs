@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
@@ -37,7 +38,7 @@ namespace PanieAreczkuWPF
                 return;
             }
             var image = ScreenCapture.CaptureDesktop();
-            image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{ DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss")}.jpg", ImageFormat.Jpeg);
+            image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{ DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.jpg", ImageFormat.Jpeg);
             bool makeSound = bool.Parse(ConfigurationManager.AppSettings["MakeSound"]);
             if(makeSound)
                 PlaySound();
@@ -67,7 +68,8 @@ namespace PanieAreczkuWPF
                 string Subj = "Panie Areczku co Pan robi!!!";
                 string Message = "Tu Krystian";
 
-                string[] fileNames = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots");
+                string screenshotsDirPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\ScreenShoots";
+                string[] fileNames = Directory.GetFiles(screenshotsDirPath);
 
                 //Reading sender Email credential from web.config file  
 
@@ -82,14 +84,14 @@ namespace PanieAreczkuWPF
                 mailMessage.Body = Message; //body or message of Email  
                 mailMessage.IsBodyHtml = true;
 
-                foreach (var fileName in fileNames)
-                {
-                    byte[] file = File.ReadAllBytes(fileName);
-                    MemoryStream stream1 = new MemoryStream(file);
-                    //stream1.Write(file, 0, file.Length);
-                    //stream1.Position = 0;
-                    mailMessage.Attachments.Add(new Attachment(stream1, $"{fileName}.jpg"));
-                }
+                string screenshotsZipPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\screenshots.zip";
+                ZipFile.CreateFromDirectory(screenshotsDirPath, screenshotsZipPath);
+                byte[] file = File.ReadAllBytes(screenshotsZipPath);
+                MemoryStream stream1 = new MemoryStream(file);
+                //stream1.Write(file, 0, file.Length);
+                //stream1.Position = 0;
+                mailMessage.Attachments.Add(new Attachment(stream1, screenshotsZipPath));
+                
 
                 string[] ToMuliId = ToEmail.Split(',');
                 foreach (string ToEMailId in ToMuliId)
@@ -125,6 +127,7 @@ namespace PanieAreczkuWPF
                 {
                     File.Delete(fileName);
                 }
+                File.Delete(screenshotsZipPath);
             }
             catch (Exception ex)
             {
