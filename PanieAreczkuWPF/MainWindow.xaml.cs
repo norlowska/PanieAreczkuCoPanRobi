@@ -24,19 +24,25 @@ namespace PanieAreczkuWPF
             dispatcherTimer.Tick += new EventHandler(MakeScreenShot);
             dispatcherTimer.Interval = new TimeSpan(0, 0, int.Parse(ConfigurationManager.AppSettings["ScreenShotInterval"]));
             dispatcherTimer.Start();
-
-            dispatcherTimer.Tick += new EventHandler(SendEmail);
         }
-
 
         private void MakeScreenShot(object sender, EventArgs e)
         {
+            var nowTime = DateTime.Now;
+            // TODO confiugre 8 and 16
+            if (nowTime.Hour > 16 && getFilesNumber() > 0) {
+                SendEmail(null, null);
+            }
+            if (nowTime.Hour < 8 || nowTime.Hour > 16) {
+                return;
+            }
             var image = ScreenCapture.CaptureDesktop();
-            image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss")}.jpg", ImageFormat.Jpeg);
+            image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{ DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ss")}.jpg", ImageFormat.Jpeg);
             bool makeSound = bool.Parse(ConfigurationManager.AppSettings["MakeSound"]);
             if(makeSound)
                 PlaySound();
         }
+
         private void PlaySound()
         {
             var uri = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/Resources/DARIO.mp3", UriKind.RelativeOrAbsolute);
@@ -44,6 +50,10 @@ namespace PanieAreczkuWPF
 
             player.Open(uri);
             player.Play();
+        }
+
+        private int getFilesNumber() {
+            return Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots").Length;
         }
 
 
@@ -56,7 +66,6 @@ namespace PanieAreczkuWPF
                 string bcc = "panareczek.panareczek@wp.pl";
                 string Subj = "Panie Areczku co Pan robi!!!";
                 string Message = "Tu Krystian";
-
 
                 string[] fileNames = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots");
 
@@ -73,8 +82,6 @@ namespace PanieAreczkuWPF
                 mailMessage.Body = Message; //body or message of Email  
                 mailMessage.IsBodyHtml = true;
 
-
-
                 foreach (var fileName in fileNames)
                 {
                     byte[] file = File.ReadAllBytes(fileName);
@@ -84,13 +91,11 @@ namespace PanieAreczkuWPF
                     mailMessage.Attachments.Add(new Attachment(stream1, $"{fileName}.jpg"));
                 }
 
-
                 string[] ToMuliId = ToEmail.Split(',');
                 foreach (string ToEMailId in ToMuliId)
                 {
                     mailMessage.To.Add(new MailAddress(ToEMailId)); //adding multiple TO Email Id  
                 }
-
 
                 string[] CCId = cc.Split(',');
 
@@ -120,15 +125,10 @@ namespace PanieAreczkuWPF
                 {
                     File.Delete(fileName);
                 }
-
-
-
             }
             catch (Exception ex)
             {
-
                 File.WriteAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $"/Logi.txt", ex.ToString());
-
             }
         }
     }
