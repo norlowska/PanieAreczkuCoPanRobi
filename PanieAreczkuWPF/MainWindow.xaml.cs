@@ -21,26 +21,45 @@ namespace PanieAreczkuWPF
         {
             InitializeComponent();
             Directory.CreateDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/ScreenShoots");
-            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(MakeScreenShot);
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(HandleTickEvent);
             dispatcherTimer.Interval = new TimeSpan(0, 0, int.Parse(ConfigurationManager.AppSettings["ScreenShotInterval"]));
             dispatcherTimer.Start();
         }
 
-        private void MakeScreenShot(object sender, EventArgs e)
+        private void HandleTickEvent(object sender, EventArgs e)
         {
-            var nowTime = DateTime.Now;
-            // TODO confiugre 8 and 16
-            if (nowTime.Hour > 16 && getFilesNumber() > 0) {
-                SendEmail(null, null);
+            try
+            {
+                if (bool.Parse(ConfigurationManager.AppSettings["WorkHours"]))
+                {
+                    DateTime startTime = DateTime.Parse(ConfigurationManager.AppSettings["StartTime"]);
+                    DateTime endTime = DateTime.Parse(ConfigurationManager.AppSettings["EndTime"]);
+                    DateTime now = DateTime.Now;
+                    if (now.Hour < startTime.Hour || (now.Hour == startTime.Hour && now.Minute < startTime.Minute)) return;
+                    else if (now.Hour > endTime.Hour || (now.Hour == endTime.Hour && now.Minute > endTime.Minute))
+                    {
+                        if(getFilesNumber() > 0) SendEmail(null, null);
+                        return;
+                    }
+                }
+                else if (getFilesNumber() > 0) // && jakaś godzina? lub usunąć parametr WorkHours
+                    SendEmail(null, null);
+
+                TakeScreenShot();
             }
-            if (nowTime.Hour < 8 || nowTime.Hour > 16) {
-                return;
+            catch (Exception ex)
+            {
+                File.WriteAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $"/Logi.txt", ex.ToString());
             }
+        }
+
+        private void TakeScreenShot()
+        {
             var image = ScreenCapture.CaptureDesktop();
-            image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{ DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")}.jpg", ImageFormat.Jpeg);
+            image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jpg", ImageFormat.Jpeg);
             bool makeSound = bool.Parse(ConfigurationManager.AppSettings["MakeSound"]);
-            if(makeSound)
+            if (makeSound)
                 PlaySound();
         }
 
@@ -53,7 +72,8 @@ namespace PanieAreczkuWPF
             player.Play();
         }
 
-        private int getFilesNumber() {
+        private static int getFilesNumber()
+        {
             return Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots").Length;
         }
 
@@ -62,20 +82,25 @@ namespace PanieAreczkuWPF
         {
             try
             {
-                string ToEmail = "panareczek.panareczek@wp.pl";
-                string cc = "panareczek.panareczek@wp.pl";
-                string bcc = "panareczek.panareczek@wp.pl";
+                string ToEmail = ConfigurationManager.AppSettings["ToMail"];
                 string Subj = "Panie Areczku co Pan robi!!!";
-                string Message = "Tu Krystian";
+
+                string templatePath = ConfigurationManager.AppSettings["TemplatePath"];
+                string Message = "";
+                if (File.Exists(templatePath))
+                    Message = File.ReadAllText(templatePath)
+                                .Replace(ReportTags.CREATE_DATE, DateTime.Now.ToString("dd.MM.yyyy"))
+                                .Replace(ReportTags.SCREENSHOTS_TAKEN, getFilesNumber().ToString())
+                                .Replace(ReportTags.WORK_STATION, Environment.MachineName);
 
                 string screenshotsDirPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\ScreenShoots";
                 string[] fileNames = Directory.GetFiles(screenshotsDirPath);
 
                 //Reading sender Email credential from web.config file  
 
-                string HostAdd = ConfigurationManager.AppSettings["Host"].ToString();
-                string FromEmailid = ConfigurationManager.AppSettings["FromMail"].ToString();
-                string Pass = ConfigurationManager.AppSettings["Password"].ToString();
+                string HostAdd = ConfigurationManager.AppSettings["Host"];
+                string FromEmailid = ConfigurationManager.AppSettings["FromMail"];
+                string Pass = ConfigurationManager.AppSettings["Password"];
 
                 //creating the object of MailMessage  
                 MailMessage mailMessage = new MailMessage();
@@ -87,11 +112,11 @@ namespace PanieAreczkuWPF
                 string screenshotsZipPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\screenshots.zip";
                 ZipFile.CreateFromDirectory(screenshotsDirPath, screenshotsZipPath);
                 byte[] file = File.ReadAllBytes(screenshotsZipPath);
+                foreach (var fileName in fileNames)
+                    File.Delete(fileName);
                 MemoryStream stream1 = new MemoryStream(file);
-                //stream1.Write(file, 0, file.Length);
-                //stream1.Position = 0;
-                mailMessage.Attachments.Add(new Attachment(stream1, screenshotsZipPath));
-                
+                mailMessage.Attachments.Add(new Attachment(stream1, "screenshots_" + Environment.MachineName + DateTime.Now.ToString("_ddMMyyy") + ".zip"));
+
 
                 string[] ToMuliId = ToEmail.Split(',');
                 foreach (string ToEMailId in ToMuliId)
@@ -99,21 +124,8 @@ namespace PanieAreczkuWPF
                     mailMessage.To.Add(new MailAddress(ToEMailId)); //adding multiple TO Email Id  
                 }
 
-                string[] CCId = cc.Split(',');
-
-                foreach (string CCEmail in CCId)
-                {
-                    mailMessage.CC.Add(new MailAddress(CCEmail)); //Adding Multiple CC email Id  
-                }
-
-                string[] bccid = bcc.Split(',');
-
-                foreach (string bccEmailId in bccid)
-                {
-                    mailMessage.Bcc.Add(new MailAddress(bccEmailId)); //Adding Multiple BCC email Id  
-                }
                 SmtpClient smtp = new SmtpClient();  // creating object of smptpclient  
-                smtp.Host = HostAdd;             
+                smtp.Host = HostAdd;
                 smtp.EnableSsl = true;
 
                 NetworkCredential NetworkCred = new NetworkCredential();
@@ -123,10 +135,6 @@ namespace PanieAreczkuWPF
                 smtp.Port = 587;
                 smtp.Send(mailMessage); //sending Email  
 
-                foreach (var fileName in fileNames)
-                {
-                    File.Delete(fileName);
-                }
                 File.Delete(screenshotsZipPath);
             }
             catch (Exception ex)

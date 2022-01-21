@@ -70,6 +70,7 @@
     <Compile Include="Installer1.Designer.cs">
       <DependentUpon>Installer1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportTags.cs" />
     <Compile Include="ScreenCapture.cs" />
     <Page Include="ConfigurationWindow.xaml">
       <SubType>Designer</SubType>
