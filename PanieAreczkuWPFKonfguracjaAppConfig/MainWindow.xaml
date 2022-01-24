@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PanieAreczkuWPFKonfguracjaAppConfig"
         mc:Ignorable="d"
-       Title="ConfigurationWindow" Width="400" Background="#FFF6F2DA">
+       Title="Konfiguracja" Width="400" Background="#FFF6F2DA">
     <Grid Background="#FFF6F2DA">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,77 +24,77 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="PANIE ARECZKU, CO PAN ROBI?&#xD;&#xA;" HorizontalAlignment="Center" Width="auto" Height="27" Margin="0,35,0,10" />
         <Image Grid.Row="1" HorizontalAlignment="Center"  Name="MyImg"  Height="76" Width="141" Source="/eyes.PNG" Margin="0,0,0,10"/>
-        <Grid Grid.Row="2" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="2" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="300" Background="#FFF6F3EC" Margin="0,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Content="E-mail" Height="Auto" HorizontalAlignment="Left" Name="EmailLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
-            <TextBox Grid.Column="1" x:Name="EmailTextBox" Padding="3,2" TextWrapping="Wrap" Text="" HorizontalAlignment="Stretch" Margin="5,10,10,10" />
+            <Label Grid.Column="0" Content="Adres e-mail" Height="Auto" HorizontalAlignment="Left" Name="EmailLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
+            <TextBox Grid.Column="1" x:Name="EmailTextBox" Padding="3,2" TextWrapping="Wrap" Text="" HorizontalAlignment="Stretch" Margin="5,10,15,10" />
         </Grid>
-        <Grid Grid.Row="3" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="3" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="300" Background="#FFF6F3EC" Margin="0,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Content="Password" Height="Auto" HorizontalAlignment="Left" Name="PasswordLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
-            <PasswordBox Grid.Column="1" x:Name="PasswordTextBox" Padding="3,2" HorizontalAlignment="Stretch" Margin="5,10,10,10"  />
+            <Label Grid.Column="0" Content="Hasło" Height="Auto" HorizontalAlignment="Left" Name="PasswordLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
+            <PasswordBox Grid.Column="1" x:Name="PasswordTextBox" Padding="3,2" HorizontalAlignment="Stretch" Margin="5,10,15,10"  />
         </Grid>
-        <Grid Grid.Row="4" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="4" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="300" Background="#FFF6F3EC" Margin="0,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition />
-                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Content="Delay" Height="Auto" HorizontalAlignment="Left" Name="DelayLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
+            <Label Grid.Column="0" Content="Interwał" Height="Auto" HorizontalAlignment="Left" Name="DelayLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
             <TextBox Grid.Column="1" x:Name="DelayMinuteTextBox" Padding="3,2" HorizontalAlignment="Stretch" Margin="5,10,0,10" />
-            <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="4">m</TextBlock>
-            <TextBox Grid.Column="3" x:Name="DelaySecondTextBox" Padding="3,2" HorizontalAlignment="Stretch" Margin="0,10,0,10" />
-            <TextBlock Grid.Column="4" VerticalAlignment="Center" Margin="4,4,10,4">s</TextBlock>
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="6,8,4,8">m</TextBlock>
+            <TextBox Grid.Column="3" x:Name="DelaySecondTextBox" Padding="3,2" HorizontalAlignment="Stretch" Margin="10,10,0,10" />
+            <TextBlock Grid.Column="4" VerticalAlignment="Center" Margin="6,4,0,4">s</TextBlock>
         </Grid>        
-        <Grid Grid.Row="5" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="5" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="300" Background="#FFF6F3EC" Margin="0,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="35" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Sound Effect" Height="Auto" HorizontalAlignment="Left" Name="SoundLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
-            <CheckBox Grid.Column="1" x:Name="SoundEffectCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,10,10,10"  />
+            <CheckBox Grid.Column="0" x:Name="SoundEffectCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,5,0,5" />
+            <Label Grid.Column="1" Content="Dźwięk" Height="Auto" HorizontalAlignment="Left" Name="SoundLabel" VerticalAlignment="Center" Margin="5,10,10,10" Padding="0" />
         </Grid>
-        <Grid Grid.Row="6" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="6" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="300" Background="#FFF6F3EC" Margin="0,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="35" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Work Hours" Height="Auto" HorizontalAlignment="Left" Name="EnableWorkHoursLabel" VerticalAlignment="Center" Margin="10,5,0,5" Padding="0" />
-            <CheckBox Grid.Column="1" x:Name="EnableWorkHoursCheckbox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,10,10,10" />            
+            <CheckBox Grid.Column="0" x:Name="EnableWorkHoursCheckbox" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,5,0,5" />
+            <Label Grid.Column="1" Content="Godziny działania programu" Height="Auto" HorizontalAlignment="Left" Name="EnableWorkHoursLabel" VerticalAlignment="Center" Margin="5,10,10,10" Padding="0" />
         </Grid>
-        <Grid Grid.Row="7" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="7" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="280" Background="#FFF6F3EC" Margin="20,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
@@ -109,17 +109,17 @@
                 </Style>
             </Grid.Style>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="115" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="15" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Start" Height="28" HorizontalAlignment="Left" Name="WorkHoursStartLabel" VerticalAlignment="Center" Margin="10,0,0,0" />
+            <Label Grid.Column="0" Content="Od" Height="28" HorizontalAlignment="Left" Name="WorkHoursStartLabel" VerticalAlignment="Center" Margin="10,0,0,0" />
             <TextBox Grid.Column="1" x:Name="WorkHoursStartHourTextBox" Padding="3,2" Height="22" VerticalAlignment="Center" Margin="5,10,0,10" TextChanged="HandleWorkHoursChange" />
             <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">:</TextBlock>
-            <TextBox Grid.Column="3" x:Name="WorkHoursStartMinuteTextBox" Padding="3,2" Height="22" VerticalAlignment="Center" Margin="0,10,10,10"  TextChanged="HandleWorkHoursChange"/>
+            <TextBox Grid.Column="3" x:Name="WorkHoursStartMinuteTextBox" Padding="3,2" Height="22" VerticalAlignment="Center" Margin="0,10,15,10"  TextChanged="HandleWorkHoursChange"/>
         </Grid>
-        <Grid Grid.Row="8" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="265" Background="#FFF6F3EC" Margin="0,0,0,10">
+        <Grid Grid.Row="8" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Width="280" Background="#FFF6F3EC" Margin="20,0,0,10">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Grid.Effect>
@@ -134,17 +134,17 @@
                 </Style>
             </Grid.Style>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="115" />
                 <ColumnDefinition />
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="End" Height="28" HorizontalAlignment="Left" Name="WorkHoursEndLabel" VerticalAlignment="Center" Margin="10,0,0,0" />
+            <Label Grid.Column="0" Content="Do" Height="28" HorizontalAlignment="Left" Name="WorkHoursEndLabel" VerticalAlignment="Center" Margin="10,0,0,0" />
             <TextBox Grid.Column="1" x:Name="WorkHoursEndHourTextBox" Padding="3,2" Height="22" VerticalAlignment="Center" Margin="5,10,0,10" TextChanged="HandleWorkHoursChange" />
             <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3">:</TextBlock>
-            <TextBox Grid.Column="3" x:Name="WorkHoursEndMinuteTextBox" Padding="3,2" Height="22" VerticalAlignment="Center" Margin="0,10,10,10" TextChanged="HandleWorkHoursChange" />
+            <TextBox Grid.Column="3" x:Name="WorkHoursEndMinuteTextBox" Padding="3,2" Height="22" VerticalAlignment="Center" Margin="0,10,15,10" TextChanged="HandleWorkHoursChange" />
         </Grid>
-        <Button Grid.Row="9" x:Name="SaveBtn" Content="SAVE" HorizontalAlignment="Center" Height="24" VerticalAlignment="Top" Width="265" Background="#FFBDD8DD" BorderBrush="{x:Null}" Click="SaveBtn_Click" Margin="0,15,0,0">
+        <Button Grid.Row="9" x:Name="SaveBtn" Content="Zapisz" HorizontalAlignment="Center" Height="24" VerticalAlignment="Top" Width="300" Background="#FFBDD8DD" BorderBrush="{x:Null}" Click="SaveBtn_Click" Margin="0,15,0,0">
             <Button.Effect>
                 <DropShadowEffect Opacity="0.5"/>
             </Button.Effect>
