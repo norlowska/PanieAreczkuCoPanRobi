@@ -17,7 +17,7 @@ namespace PanieAreczkuWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool emailSent = false;
+        static bool emailSent = false;
         int defaultHourOfSendingEmail = 18;
         public MainWindow()
         {
@@ -33,11 +33,11 @@ namespace PanieAreczkuWPF
         {
             try
             {
+                DateTime now = DateTime.Now;
                 if (bool.Parse(ConfigurationManager.AppSettings["WorkHours"]))
                 {
-                    DateTime startTime = DateTime.Parse(ConfigurationManager.AppSettings["StartTime"]);
-                    DateTime endTime = DateTime.Parse(ConfigurationManager.AppSettings["EndTime"]);
-                    DateTime now = DateTime.Now;
+                    DateTime startTime = DateTime.TryParse(ConfigurationManager.AppSettings["StartTime"], out var st) ? st : DateTime.MinValue.AddHours(9);
+                    DateTime endTime = DateTime.TryParse(ConfigurationManager.AppSettings["EndTime"], out var et) ? et : DateTime.MinValue.AddHours(17);
                     if (now.Hour < startTime.Hour || (now.Hour == startTime.Hour && now.Minute < startTime.Minute)) return;
                     else if (now.Hour > endTime.Hour || (now.Hour == endTime.Hour && now.Minute > endTime.Minute))
                     {
@@ -45,7 +45,7 @@ namespace PanieAreczkuWPF
                         return;
                     }
                     if (emailSent && now.Hour == startTime.Hour && now.Minute > startTime.Minute) {
-                        emailSent = false
+                        emailSent = false;
                     }
                 }
                 else if (now.Hour == defaultHourOfSendingEmail && getFilesNumber() > 0 && !emailSent) {
@@ -53,7 +53,7 @@ namespace PanieAreczkuWPF
                 }
                 else if (now.Hour > defaultHourOfSendingEmail) {
                     emailSent = false;
-                }   
+                }
                 TakeScreenShot();
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace PanieAreczkuWPF
         {
             var image = ScreenCapture.CaptureDesktop();
             image.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + $@"/ScreenShoots/{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.jpg", ImageFormat.Jpeg);
-            bool makeSound = bool.Parse(ConfigurationManager.AppSettings["MakeSound"]);
+            bool makeSound = bool.TryParse(ConfigurationManager.AppSettings["MakeSound"], out var tmpSound) ? tmpSound : true;
             if (makeSound)
                 PlaySound();
         }
@@ -94,7 +94,7 @@ namespace PanieAreczkuWPF
                 string Subj = "Panie Areczku co Pan robi!!!";
 
                 string templatePath = ConfigurationManager.AppSettings["TemplatePath"];
-                string Message = "";
+                string Message = "W załączniku znajdują się zrzuty ekranu z ostatniej doby.";
                 if (File.Exists(templatePath))
                     Message = File.ReadAllText(templatePath)
                                 .Replace(ReportTags.CREATE_DATE, DateTime.Now.ToString("dd.MM.yyyy"))
