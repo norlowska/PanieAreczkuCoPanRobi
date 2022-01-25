@@ -17,6 +17,8 @@ namespace PanieAreczkuWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool emailSent = false;
+        int defaultHourOfSendingEmail = 18;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,13 +41,19 @@ namespace PanieAreczkuWPF
                     if (now.Hour < startTime.Hour || (now.Hour == startTime.Hour && now.Minute < startTime.Minute)) return;
                     else if (now.Hour > endTime.Hour || (now.Hour == endTime.Hour && now.Minute > endTime.Minute))
                     {
-                        if(getFilesNumber() > 0) SendEmail(null, null);
+                        if(getFilesNumber() > 0 && !emailSent) SendEmail(null, null);
                         return;
                     }
+                    if (emailSent && now.Hour == startTime.Hour && now.Minute > startTime.Minute) {
+                        emailSent = false
+                    }
                 }
-                else if (getFilesNumber() > 0) // && jakaś godzina? lub usunąć parametr WorkHours
+                else if (now.Hour == defaultHourOfSendingEmail && getFilesNumber() > 0 && !emailSent) {
                     SendEmail(null, null);
-
+                }
+                else if (now.Hour > defaultHourOfSendingEmail) {
+                    emailSent = false;
+                }   
                 TakeScreenShot();
             }
             catch (Exception ex)
@@ -136,6 +144,7 @@ namespace PanieAreczkuWPF
                 smtp.Send(mailMessage); //sending Email  
 
                 File.Delete(screenshotsZipPath);
+                emailSent = true;
             }
             catch (Exception ex)
             {
